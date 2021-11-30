@@ -2,55 +2,103 @@ package com.portal.app.dto;
 
 import java.util.Date;
 
+import com.portal.app.model.User;
+
 public class FileDto {
-private Integer id;
-	private String name;
-	private String url;
-	private String type;
-	private long size;
-	
-	public FileDto(String name,String type, long size,Integer id) {
+	private Integer id;
+	private String filename;
+	private String uploadBy;
+	private String signedBy;
+	private Boolean signedStatus;
+	private Date uploadDateTime;
+	private User user;
+	private String status;
+	private String comments;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public FileDto(Integer id, String filename, String uploadBy, String signedBy, Boolean signedStatus,
+			Date uploadDateTime, User user, String status, String comments) {
 		super();
-		this.name = name;
-	
-		this.type = type;
-		this.size = size;
-		this.id=id;
+		this.id = id;
+		this.filename = filename;
+		this.uploadBy = uploadBy;
+		this.signedBy = signedBy;
+		this.signedStatus = signedStatus;
+		this.uploadDateTime = uploadDateTime;
+		this.user = user;
+		this.status = status;
+		this.comments = comments;
 	}
-	public FileDto(String filename) {
-		this.name=filename;
-		// TODO Auto-generated constructor stub
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	public FileDto(String filename, Integer id2,String fileSignedBy,String updateOn) {
-		this.name=filename;
-		this.size=id2;
-		this.url=fileSignedBy;
-		this.type=updateOn;
-		// TODO Auto-generated constructor stub
+
+	public String getFilename() {
+		return filename;
 	}
-	public String getName() {
-		return name;
+
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public String getUploadBy() {
+		return uploadBy;
 	}
-	public String getUrl() {
-		return url;
+
+	public void setUploadBy(String uploadBy) {
+		this.uploadBy = uploadBy;
 	}
-	public void setUrl(String url) {
-		this.url = url;
+
+	public String getSignedBy() {
+		return signedBy;
 	}
-	public String getType() {
-		return type;
+
+	public void setSignedBy(String signedBy) {
+		this.signedBy = signedBy;
 	}
-	public void setType(String type) {
-		this.type = type;
+
+	public Boolean getSignedStatus() {
+		return signedStatus;
 	}
-	public long getSize() {
-		return size;
+
+	public void setSignedStatus(Boolean signedStatus) {
+		this.signedStatus = signedStatus;
 	}
-	public void setSize(long size) {
-		this.size = size;
+
+	public Date getUploadDateTime() {
+		return uploadDateTime;
 	}
-	
+
+	public void setUploadDateTime(Date uploadDateTime) {
+		this.uploadDateTime = uploadDateTime;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
 }

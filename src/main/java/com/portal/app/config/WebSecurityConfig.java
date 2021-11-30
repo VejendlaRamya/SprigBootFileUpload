@@ -17,46 +17,40 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
-	
-	 @Autowired
-	    private JwtAuthenticationEntryPoint unauthorizedHandler;
-	 @Resource(name = "userService")
-	 private UserDetailsService userDetailsService;
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-@Bean
-public JWTAuthorizationFilter authorizationTokenFilterBean() throws Exception {
-    return new JWTAuthorizationFilter();
-}
-	  
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().
-                authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .anyRequest().authenticated()
-               .and()
-              .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-               .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http
-                .addFilterBefore(authorizationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-    }
-  // 
-    
-    @Autowired
-    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(encoder());
-    }
+	@Autowired
+	private JwtAuthenticationEntryPoint unauthorizedHandler;
+	@Resource(name = "userService")
+	private UserDetailsService userDetailsService;
 
-    @Bean
-    public BCryptPasswordEncoder encoder(){
-        return new BCryptPasswordEncoder();
-    }
-    
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+	@Bean
+	public JWTAuthorizationFilter authorizationTokenFilterBean() throws Exception {
+		return new JWTAuthorizationFilter();
+	}
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/login", "/signup").permitAll().anyRequest()
+				.authenticated().and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.addFilterBefore(authorizationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+	}
+	//
+
+	@Autowired
+	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
+	}
+
+	@Bean
+	public BCryptPasswordEncoder encoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Override
+	@Bean
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 }
